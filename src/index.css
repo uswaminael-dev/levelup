@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Inter,sans-serif;
+  background:#0f172a;
+  color:white;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+#root{
+  min-height:100vh;
+}
+
+.glass{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:24px;
+}
+
+.page{
+  padding:32px;
+}
+
+/* THEMES */
+
+body[data-theme="calm"]{
+  background:#0f172a;
+}
+
+body[data-theme="ocean"]{
+  background:linear-gradient(
+    120deg,
+    #0ea5e9,
+    #1e3a8a
+  );
+}
+
+body[data-theme="forest"]{
+  background:linear-gradient(
+    120deg,
+    #14532d,
+    #052e16
+  );
+}
+
+body[data-theme="night"]{
+  background:#020617;
+}
+
+body[data-theme="minimal"]{
+  background:#f8fafc;
+  color:#111827;
+}
+
+body[data-theme="minimal"] .glass{
+  background:rgba(255,255,255,0.9);
+  border:1px solid rgba(0,0,0,0.08);
+  backdrop-filter:blur(20px);
+  box-shadow:0 8px 30px rgba(0,0,0,0.08);
+}
+
+body[data-theme="minimal"] h1,
+body[data-theme="minimal"] h2,
+body[data-theme="minimal"] h3,
+body[data-theme="minimal"] p{
+  color:#111827;
+}
