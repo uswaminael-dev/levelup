@@ -1,84 +1,167 @@
-import {
-useContext
-}
-from "react";
+import { useContext } from "react";
+import { TaskContext } from "../context/TaskContext";
 
-import Navbar
-from "../components/layout/Navbar";
+import Navbar from "../components/layout/Navbar";
+import Background from "../components/layout/Background";
 
-import Background
-from "../components/layout/Background";
+export default function Achievements() {
+  const {
+    completedCount,
+    level,
+    focusSessions,
+    habits,
+    journalEntries,
+  } = useContext(TaskContext);
 
-import {
-TaskContext
-}
-from "../context/TaskContext";
+  const achievements = [
+    {
+      title: "First Step",
+      icon: "🌱",
+      unlocked: completedCount >= 1,
+      description: "Complete your first task",
+    },
 
-import {
-achievements
-}
-from "../data/achievements";
+    {
+      title: "Productive Day",
+      icon: "⚡",
+      unlocked: completedCount >= 5,
+      description: "Complete 5 tasks",
+    },
 
-import AchievementCard
-from "../components/achievements/AchievementCard";
+    {
+      title: "Focus Warrior",
+      icon: "🎯",
+      unlocked: focusSessions >= 10,
+      description: "Finish 10 focus sessions",
+    },
 
-export default function Achievements(){
+    {
+      title: "Habit Builder",
+      icon: "🔥",
+      unlocked:
+        habits.some(
+          (habit) => habit.streak >= 7
+        ),
+      description: "Reach a 7 day habit streak",
+    },
 
-const {
-completedCount
-}
-=
-useContext(
-TaskContext
-);
+    {
+      title: "Reflective Mind",
+      icon: "📖",
+      unlocked:
+        journalEntries.length >= 10,
+      description: "Write 10 journal entries",
+    },
 
-return(
+    {
+      title: "Level Up",
+      icon: "🏆",
+      unlocked: level >= 5,
+      description: "Reach Level 5",
+    },
+  ];
 
-<div>
+    const unlockedCount =
+    achievements.filter(
+        (a) => a.unlocked
+    ).length;
 
-<Background/>
+    const achievementPercent =
+    Math.round(
+        (unlockedCount /
+        achievements.length) *
+        100
+    );
 
-<Navbar/>
+  return (
+    <div>
+      <Background />
+      <Navbar />
 
-<div
-className="
-page
-grid
-md:grid-cols-2
-gap-6
-"
->
+      <div className="page">
 
-{
-achievements.map(
-achievement => (
+        <div className="glass p-6">
 
-<AchievementCard
+          <h1 className="text-3xl font-bold mb-6">
+            Achievements
+          </h1>
 
-key={
-achievement.id
-}
+        <div className="glass p-4 mb-6">
 
-achievement={
-achievement
-}
+        <h2 className="font-bold text-xl">
+            Progress
+            <p>
+            Completion:
+            {achievementPercent}%
+            </p>
+        </h2>
 
-unlocked={
-completedCount >=
-achievement.target
-}
+        <p>
+            Unlocked:
+            {
+            achievements.filter(
+                (a) => a.unlocked
+            ).length
+            }
+            /
+            {achievements.length}
+        </p>
 
-/>
+        </div>
 
-)
-)
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-}
+            {achievements.map(
+              (achievement) => (
+                <div
+                  key={achievement.title}
+                  className={`
+                    glass
+                    p-5
+                    transition-all
+                    ${
+                      achievement.unlocked
+                        ? ""
+                        : "opacity-50"
+                    }
+                  `}
+                >
 
-</div>
+                  <div className="text-5xl mb-3">
+                    {achievement.icon}
+                  </div>
 
-</div>
+                  <h2 className="font-bold text-xl">
+                    {achievement.title}
+                  </h2>
 
-);
+                  <p className="opacity-70">
+                    {
+                      achievement.description
+                    }
+                  </p>
 
+                  <div className="mt-4">
+                    {achievement.unlocked ? (
+                      <span className="text-green-500">
+                        ✅ Unlocked
+                      </span>
+                    ) : (
+                      <span className="text-yellow-500">
+                        🔒 Locked
+                      </span>
+                    )}
+                  </div>
+
+                </div>
+              )
+            )}
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  );
 }

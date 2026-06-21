@@ -9,14 +9,54 @@ export default function Navbar() {
       </h1>
 
       <div className="flex gap-6">
-        <Link to="/">Dashboard</Link>
-        <Link to="/tasks">Tasks</Link>
-        <Link to="/analytics">Analytics</Link>
-        <Link to="/habits">Habits</Link>
-        <Link to="/journal">Journal</Link>
-        <Link to="/achievements">Achievements</Link>
-        <Link to="/settings">Settings</Link>
-        <Link to="/focus">Focus</Link>
+        <Link
+            className="hover:opacity-70"
+            to="/"
+          >
+            Dashboard
+          </Link>
+        <Link
+            className="hover:opacity-70"
+            to="/tasks"
+          >
+            Tasks
+          </Link>
+        <Link
+            className="hover:opacity-70"
+            to="/analytics"
+          >
+            Analytics
+          </Link>
+        <Link
+            className="hover:opacity-70"
+            to="/habits"
+          >
+            Habits
+          </Link>
+        <Link
+            className="hover:opacity-70"
+            to="/journal"
+          >
+            Journal
+          </Link>
+        <Link
+            className="hover:opacity-70"
+            to="/achievements"
+          >
+            Achievements
+          </Link>
+        <Link
+            className="hover:opacity-70"
+            to="/settings"
+          >
+            Settings
+          </Link>
+        <Link
+            className="hover:opacity-70"
+            to="/focus"
+          >
+            Focus
+          </Link>
       </div>
 
     </nav>

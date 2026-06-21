@@ -4,253 +4,301 @@ export const TaskContext = createContext();
 
 export default function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
-  
-  const [level, setLevel] = useState(1);
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
-  
   const [habits, setHabits] = useState([]);
   const [journalEntries, setJournalEntries] = useState([]);
   const [focusSessions, setFocusSessions] = useState(0);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+
   const xpPerLevel = 100;
 
-  // Load
+  // =========================
+  // LOAD DATA
+  // =========================
+
   useEffect(() => {
-  const savedTasks = localStorage.getItem("tasks");
-  const savedXp = localStorage.getItem("xp");
-  const savedCompleted =localStorage.getItem("completedCount");
-  const savedHabits = localStorage.getItem("habits");
-  const savedJournal = localStorage.getItem("journal");
+    const savedTasks = localStorage.getItem("tasks");
+    const savedHabits = localStorage.getItem("habits");
+    const savedJournal = localStorage.getItem("journal");
+    const savedFocusSessions =
+      localStorage.getItem("focusSessions");
 
-  if (savedJournal) {
-    setJournalEntries(JSON.parse(savedJournal));
-  }
+    if (savedTasks) {
+      setTasks(JSON.parse(savedTasks));
+    }
 
-  if (savedHabits) {
-    setHabits(JSON.parse(savedHabits));
-  }
+    if (savedHabits) {
+      setHabits(JSON.parse(savedHabits));
+    }
 
-  if (savedTasks) setTasks(JSON.parse(savedTasks));
-  if (savedXp) setXp(Number(savedXp));
+    if (savedJournal) {
+      setJournalEntries(
+        JSON.parse(savedJournal)
+      );
+    }
 
-  if (savedCompleted) {
-    setCompletedCount(
-      Number(savedCompleted)
+    if (savedFocusSessions) {
+      setFocusSessions(
+        Number(savedFocusSessions)
+      );
+    }
+  }, []);
+
+  // =========================
+  // SAVE DATA
+  // =========================
+
+  useEffect(() => {
+    localStorage.setItem(
+      "tasks",
+      JSON.stringify(tasks)
     );
-  }
-}, []);
 
-  // Save
-  useEffect(() => {
-  localStorage.setItem(
-    "tasks",
-    JSON.stringify(tasks)
-  );
+    localStorage.setItem(
+      "habits",
+      JSON.stringify(habits)
+    );
 
-  localStorage.setItem(
-    "xp",
-    xp
-  );
+    localStorage.setItem(
+      "journal",
+      JSON.stringify(journalEntries)
+    );
 
-  localStorage.setItem(
-    "completedCount",
-    completedCount
-  );
+    localStorage.setItem(
+      "focusSessions",
+      focusSessions
+    );
+  }, [
+    tasks,
+    habits,
+    journalEntries,
+    focusSessions,
+  ]);
 
-  localStorage.setItem(
-  "habits", 
-  JSON.stringify(habits));
+  // =========================
+  // DERIVED VALUES
+  // =========================
 
-  localStorage.setItem(
-  "journal",
-  JSON.stringify(journalEntries)
-);
+  const completedCount =
+    tasks.filter(
+      (task) => task.completed
+    ).length;
 
-}, [tasks, xp, completedCount, habits, journalEntries]);
+  const xp =
+    tasks.reduce(
+      (total, task) =>
+        task.completed
+          ? total + task.xpReward
+          : total,
+      0
+    ) +
+    focusSessions * 15;
 
-  // Level system
-  useEffect(() => {
-    const newLevel = Math.floor(xp / xpPerLevel) + 1;
-    setLevel(newLevel);
-  }, [xp]);
+  const level =
+    Math.floor(xp / xpPerLevel) + 1;
 
-  // progress inside level (IMPORTANT NEW)
-  const xpIntoLevel = xp % xpPerLevel;
+  const xpIntoLevel =
+    xp % xpPerLevel;
 
-  // Add task
+  // =========================
+  // TASKS
+  // =========================
+
   const addTask = (taskData) => {
-    setTasks((prev) => [...prev,
+    setTasks((prev) => [
+      ...prev,
       {
         id: Date.now(),
         title: taskData.title,
-        reason: taskData.reason,
-        reward: taskData.reward,
-        consequence: taskData.consequence,
+        reason: taskData.reason || "",
+        reward: taskData.reward || "",
+        consequence:
+          taskData.consequence || "",
         completed: false,
         xpReward: 20,
-        createdAt: new Date().toISOString(),
+        createdAt:
+          new Date().toISOString(),
       },
     ]);
   };
 
-  // Toggle complete + XP reward
   const toggleTask = (id) => {
-  setTasks((prev) => {
-    let xpChange = 0;
-    let completedChange = 0;
-
-    const updated = prev.map((task) => {
-      if (task.id !== id) return task;
-
-      // CASE 1: completing task
-      if (!task.completed) {
-        xpChange += task.xpReward;
-        completedChange += 1;
-
-        return {
-          ...task,
-          completed: true,
-        };
-      }
-
-      // CASE 2: uncompleting task
-      xpChange -= task.xpReward;
-      completedChange -= 1;
-
-      return {
-        ...task,
-        completed: false,
-      };
-    });
-
-    // SAFE: update outside loop
-    setXp((prev) => Math.max(0, prev + xpChange));
-    setCompletedCount((prev) =>
-      Math.max(0, prev + completedChange)
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              completed:
+                !task.completed,
+            }
+          : task
+      )
     );
-
-    return updated;
-  });
-};
-
-  // Delete task
-  const deleteTask = (id) => {
-    setTasks((prev) => prev.filter((t) => t.id !== id));
   };
 
+  const deleteTask = (id) => {
+    setTasks((prev) =>
+      prev.filter(
+        (task) => task.id !== id
+      )
+    );
+  };
 
-const openTaskModal = () => setIsTaskModalOpen(true);
-const closeTaskModal = () => setIsTaskModalOpen(false);
+  // =========================
+  // MODAL
+  // =========================
 
-  //Add habit (IMPORTANT NEW)
+  const openTaskModal = () =>
+    setIsTaskModalOpen(true);
+
+  const closeTaskModal = () =>
+    setIsTaskModalOpen(false);
+
+  // =========================
+  // HABITS
+  // =========================
+
   const addHabit = (title) => {
-  setHabits((prev) => [
-    ...prev,
-    {
-      id: Date.now(),
-      title,
-      streak: 0,
-      lastCompletedDate: null,
-      completedToday: false,
-    },
-  ]);
-};
+    setHabits((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        title,
+        streak: 0,
+        completedToday: false,
+        lastCompletedDate: null,
+      },
+    ]);
+  };
 
-  //Toggle Habit
   const toggleHabit = (id) => {
-  const today = new Date().toDateString();
+    const today =
+      new Date().toDateString();
 
-  setHabits((prev) =>
-    prev.map((habit) => {
-      if (habit.id !== id) return habit;
+    setHabits((prev) =>
+      prev.map((habit) => {
+        if (habit.id !== id)
+          return habit;
 
-      let newStreak = habit.streak;
-      let completedToday = habit.completedToday;
-      let lastDate = habit.lastCompletedDate;
+        let streak =
+          habit.streak;
 
-      if (lastDate === today) {
-        // undo today completion
-        completedToday = false;
-        newStreak = Math.max(0, newStreak - 1);
-        lastDate = null;
-      } else {
-        // mark complete
-        completedToday = true;
+        let completedToday =
+          habit.completedToday;
 
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
+        let lastCompletedDate =
+          habit.lastCompletedDate;
 
-        if (habit.lastCompletedDate === yesterday.toDateString()) {
-          newStreak += 1;
+        if (
+          lastCompletedDate === today
+        ) {
+          completedToday = false;
+
+          streak = Math.max(
+            0,
+            streak - 1
+          );
+
+          lastCompletedDate = null;
         } else {
-          newStreak = 1;
+          completedToday = true;
+
+          const yesterday =
+            new Date();
+
+          yesterday.setDate(
+            yesterday.getDate() - 1
+          );
+
+          if (
+            habit.lastCompletedDate ===
+            yesterday.toDateString()
+          ) {
+            streak += 1;
+          } else {
+            streak = 1;
+          }
+
+          lastCompletedDate = today;
         }
 
-        lastDate = today;
-      }
+        return {
+          ...habit,
+          streak,
+          completedToday,
+          lastCompletedDate,
+        };
+      })
+    );
+  };
 
-      return {
-        ...habit,
-        streak: newStreak,
-        completedToday,
-        lastCompletedDate: lastDate,
-      };
-    })
-  );
-};
+  // =========================
+  // JOURNAL
+  // =========================
 
-  //Add journal entry (IMPORTANT NEW)
-    const addJournalEntry = (entry) => {
-  setJournalEntries((prev) => [
-    {
-      id: Date.now(),
-      date: new Date().toDateString(),
-      ...entry,
-    },
-    ...prev,
-  ]);
-};
+  const addJournalEntry = (
+    entry
+  ) => {
+    setJournalEntries((prev) => [
+      {
+        id: Date.now(),
+        date:
+          new Date().toDateString(),
+        ...entry,
+      },
+      ...prev,
+    ]);
+  };
 
+  // =========================
+  // FOCUS
+  // =========================
 
-  //add focus
-  const addFocusXP = (minutes) => {
-  let earnedXP = 0;
+  const addFocusXP = (
+    minutes
+  ) => {
+    if (minutes >= 10) {
+      setFocusSessions(
+        (prev) => prev + 1
+      );
+    }
+  };
 
-  if (minutes >= 25) earnedXP = 15;
-  else if (minutes >= 10) earnedXP = 5;
-
-  setXp((prev) => prev + earnedXP);
-};
-
-setFocusSessions((prev) => prev + 1);
+  // =========================
+  // PROVIDER
+  // =========================
 
   return (
     <TaskContext.Provider
       value={{
-  tasks,
-  xp,
-  level,
-  xpPerLevel,
-  xpIntoLevel,
-  addTask,
-  toggleTask,
-  deleteTask,
-  isTaskModalOpen,
-  openTaskModal,
-  closeTaskModal,
-  completedCount,
-  habits,
-  addHabit,
-  toggleHabit,
-  journalEntries,
-  addJournalEntry,
-  addFocusXP,
-  focusSessions
-}}
+        tasks,
+        habits,
+        journalEntries,
+
+        xp,
+        level,
+        xpPerLevel,
+        xpIntoLevel,
+        completedCount,
+
+        focusSessions,
+
+        addTask,
+        toggleTask,
+        deleteTask,
+
+        addHabit,
+        toggleHabit,
+
+        addJournalEntry,
+
+        addFocusXP,
+
+        isTaskModalOpen,
+        openTaskModal,
+        closeTaskModal,
+      }}
     >
       {children}
     </TaskContext.Provider>
   );
-
-
-
 }

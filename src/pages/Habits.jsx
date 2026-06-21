@@ -33,7 +33,7 @@ export default function Habits() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="New habit..."
-              className="flex-1 p-3 rounded-xl bg-slate-800"
+              className="flex-1 p-3 rounded-xl glass"
             />
 
             <button
@@ -49,7 +49,7 @@ export default function Habits() {
             {habits.map((habit) => (
               <div
                 key={habit.id}
-                className="flex justify-between items-center p-4 bg-slate-800 rounded-xl"
+                className="flex justify-between items-center p-4 glass rounded-xl"
               >
                 <div>
                   <h3 className="font-semibold">

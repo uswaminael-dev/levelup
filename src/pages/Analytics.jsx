@@ -58,14 +58,14 @@ export default function Analytics() {
           <div className="grid md:grid-cols-2 gap-4">
 
             {/* LEVEL */}
-            <div className="p-4 bg-slate-800 rounded-xl">
+            <div className="p-4 glass rounded-xl">
               <h2>Level</h2>
               <p className="text-2xl font-bold">{level}</p>
               <p className="opacity-70">XP: {xp}</p>
             </div>
 
             {/* TASKS */}
-            <div className="p-4 bg-slate-800 rounded-xl">
+            <div className="p-4 glass rounded-xl">
               <h2>Tasks</h2>
               <p>Total: {totalTasks}</p>
               <p>Completed: {completedTasks}</p>
@@ -73,7 +73,7 @@ export default function Analytics() {
             </div>
 
             {/* HABITS */}
-            <div className="p-4 bg-slate-800 rounded-xl">
+            <div className="p-4 glass rounded-xl">
               <h2>Habits</h2>
               <p>Total: {habitCount}</p>
               <p>Done Today: {completedHabits}</p>
@@ -81,7 +81,7 @@ export default function Analytics() {
             </div>
 
             {/* PRODUCTIVITY */}
-            <div className="p-4 bg-green-500/20 rounded-xl">
+            <div className="p-4 glass rounded-xl">
               <h2>Productivity Score</h2>
               <p className="text-3xl font-bold">
                 {productivityScore}%
@@ -101,7 +101,7 @@ export default function Analytics() {
               </h2>
 
               {/* CHART GOES HERE (next step we’ll plug it properly) */}
-              <div className="p-4 bg-slate-800 rounded-xl">
+              <div className="p-4 glass rounded-xl">
                 Completed: {completedCount} <br />
                 Pending: {tasks.length - completedCount}
               </div>
@@ -112,7 +112,7 @@ export default function Analytics() {
                 Habit Streaks
               </h2>
 
-              <div className="p-4 bg-slate-800 rounded-xl">
+              <div className="p-4 glass rounded-xl">
                 {habits.map((h) => (
                   <p key={h.id}>
                     {h.title}: 🔥 {h.streak}
@@ -126,7 +126,7 @@ export default function Analytics() {
                 Productivity Breakdown
               </h2>
 
-              <div className="p-4 bg-slate-800 rounded-xl">
+              <div className="p-4 glass rounded-xl">
                 Score: {productivityScore}%
               </div>
             </div>

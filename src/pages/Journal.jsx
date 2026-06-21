@@ -54,7 +54,7 @@ export default function Journal() {
               value={entry.win}
               onChange={handleChange}
               placeholder="What went well today?"
-              className="w-full p-3 rounded-xl bg-slate-800"
+              className="w-full p-3 rounded-xl glass"
             />
 
             <textarea
@@ -62,7 +62,7 @@ export default function Journal() {
               value={entry.challenge}
               onChange={handleChange}
               placeholder="What was difficult?"
-              className="w-full p-3 rounded-xl bg-slate-800"
+              className="w-full p-3 rounded-xl glass"
             />
 
             <textarea
@@ -70,7 +70,7 @@ export default function Journal() {
               value={entry.gratitude}
               onChange={handleChange}
               placeholder="What are you grateful for?"
-              className="w-full p-3 rounded-xl bg-slate-800"
+              className="w-full p-3 rounded-xl glass"
             />
 
             <textarea
@@ -78,7 +78,7 @@ export default function Journal() {
               value={entry.learning}
               onChange={handleChange}
               placeholder="What did you learn?"
-              className="w-full p-3 rounded-xl bg-slate-800"
+              className="w-full p-3 rounded-xl glass"
             />
 
             <button
@@ -99,7 +99,7 @@ export default function Journal() {
             {journalEntries.map((j) => (
               <div
                 key={j.id}
-                className="p-4 bg-slate-800 rounded-xl"
+                className="p-4 glass rounded-xl"
               >
                 <p className="text-sm opacity-70">
                   {j.date}

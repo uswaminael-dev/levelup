@@ -23,23 +23,23 @@ export default function Settings() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
 
-            <button onClick={() => setTheme("calm")} className="p-4 bg-slate-800 rounded-xl">
+            <button onClick={() => setTheme("calm")} className="p-4 glass rounded-xl">
               🌿 Calm
             </button>
 
-            <button onClick={() => setTheme("ocean")} className="p-4 bg-slate-800 rounded-xl">
+            <button onClick={() => setTheme("ocean")} className="p-4 glass rounded-xl">
               🌊 Ocean
             </button>
 
-            <button onClick={() => setTheme("forest")} className="p-4 bg-slate-800 rounded-xl">
+            <button onClick={() => setTheme("forest")} className="p-4 glass rounded-xl">
               🌲 Forest
             </button>
 
-            <button onClick={() => setTheme("night")} className="p-4 bg-slate-800 rounded-xl">
+            <button onClick={() => setTheme("night")} className="p-4 glass rounded-xl">
               🌙 Night Focus
             </button>
 
-            <button onClick={() => setTheme("minimal")} className="p-4 bg-slate-800 rounded-xl">
+            <button onClick={() => setTheme("minimal")} className="p-4 glass rounded-xl">
               ⚪ Minimal
             </button>
 
