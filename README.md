@@ -1,16 +1,123 @@
-# React + Vite
+🚀 LevelUp
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A gamified productivity platform that transforms daily tasks, habits, focus sessions, and journaling into an engaging self-improvement experience.
 
-Currently, two official plugins are available:
+Instead of a traditional to-do list, LevelUp helps users build consistency, earn XP, level up, unlock achievements, and visualize their growth over time.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+🎯 Task Management
 
-## Expanding the ESLint configuration
+- Create and manage tasks
+- Mark tasks as completed
+- Earn XP for completing tasks
+- Track productivity progress
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🔥 Habit Tracking
+
+- Create daily habits
+- Track habit streaks
+- Monitor consistency
+- Build long-term routines
+
+📈 Analytics Dashboard
+
+- Productivity insights
+- Task completion statistics
+- Habit performance tracking
+- XP and level progress
+
+📝 Journal
+
+- Daily reflection entries
+- Personal growth tracking
+- Organized journal history
+
+⚡ Focus Mode
+
+- Dedicated focus sessions
+- Ambient background sounds
+- XP rewards for deep work
+
+🏆 Achievement System
+
+- Unlock achievements
+- Progress milestones
+- Gamified motivation
+
+🎨 Theme System
+
+- Calm Theme
+- Ocean Theme
+- Forest Theme
+- Night Theme
+- Minimal Theme
+
+💾 Persistent Storage
+
+- Local Storage integration
+- Progress saved automatically
+- Data remains available after refresh
+
+---
+
+🛠 Tech Stack
+
+- React
+- Vite
+- Tailwind CSS
+- Framer Motion
+- React Router DOM
+- Local Storage API
+
+---
+
+🚀 Installation
+
+Clone the repository:
+
+git clone https://github.com/uswaminael-dev/levelup.git
+
+Navigate to the project:
+
+cd levelup
+
+Install dependencies:
+
+npm install
+
+Start development server:
+
+npm run dev
+
+Build for production:
+
+npm run build
+
+---
+
+🌐 Live Demo
+
+Coming Soon
+
+---
+
+🎯 Future Improvements
+
+- Data Export (PDF / JSON)
+- Cloud Sync
+- User Authentication
+- Advanced Analytics
+- Mood Tracking
+- Life Areas System
+- Mobile Optimization
+
+---
+
+👨‍💻 Author
+
+Uswa Minael
+
+Built as part of my journey toward becoming a Data Scientist and Software Developer.
