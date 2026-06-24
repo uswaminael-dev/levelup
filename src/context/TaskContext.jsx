@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-
+import { checkAchievements } from "../utils/checkAchievements";
 export const TaskContext = createContext();
 
 export default function TaskProvider({ children }) {
@@ -263,6 +263,22 @@ export default function TaskProvider({ children }) {
     }
   };
 
+  useEffect(() => {
+  checkAchievements({
+    completedCount,
+    level,
+    focusSessions,
+    habits,
+    journalEntries,
+  });
+  }, [
+    completedCount,
+    level,
+    focusSessions,
+    habits,
+    journalEntries,
+  ]);
+  
   // =========================
   // PROVIDER
   // =========================

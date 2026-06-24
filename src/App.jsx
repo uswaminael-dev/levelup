@@ -1,9 +1,13 @@
 import {
-BrowserRouter,
-Routes,
-Route
-}
-from "react-router-dom";
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
+import {
+  useEffect,
+  useState,
+} from "react";
 
 import Dashboard from "./pages/Dashboard";
 import Tasks from "./pages/Tasks";
@@ -13,62 +17,74 @@ import Journal from "./pages/Journal";
 import Settings from "./pages/Settings";
 import Achievements from "./pages/Achievements";
 import Focus from "./pages/Focus";
+import SplashScreen from "./components/SplashScreen";
 
 function App() {
+  const [loading, setLoading] =
+    useState(true);
 
-return (
+  useEffect(() => {
+    const timer =
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
 
-<BrowserRouter>
+    return () =>
+      clearTimeout(timer);
+  }, []);
 
-<Routes>
+  if (loading) {
+    return <SplashScreen />;
+  }
 
-<Route
-path="/"
-element={<Dashboard />}
-/>
+  return (
+    <BrowserRouter>
+      <Routes>
 
-<Route
-path="/tasks"
-element={<Tasks />}
-/>
+        <Route
+          path="/"
+          element={<Dashboard />}
+        />
 
-<Route
-path="/analytics"
-element={<Analytics />}
-/>
+        <Route
+          path="/tasks"
+          element={<Tasks />}
+        />
 
-<Route
-path="/habits"
-element={<Habits />}
-/>
+        <Route
+          path="/analytics"
+          element={<Analytics />}
+        />
 
-<Route
-path="/journal"
-element={<Journal />}
-/>
+        <Route
+          path="/habits"
+          element={<Habits />}
+        />
+
+        <Route
+          path="/journal"
+          element={<Journal />}
+        />
+
+        <Route
+          path="/achievements"
+          element={<Achievements />}
+        />
+
+        <Route
+          path="/focus"
+          element={<Focus />}
+        />
+
+        <Route
+          path="/settings"
+          element={<Settings />}
+        />
 
 
-<Route
-path="/achievements"
-element={<Achievements />}
-/>
-
-<Route path="/focus" element={<Focus />} />
-
-
-<Route
-path="/settings"
-element={<Settings />}
-/>
-
-
-
-</Routes>
-
-</BrowserRouter>
-
-);
-
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

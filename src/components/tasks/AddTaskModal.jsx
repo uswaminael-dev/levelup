@@ -39,7 +39,7 @@ export default function AddTaskModal() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="What do you want to achieve?"
-          className="w-full p-3 rounded-xl bg-slate-800 mb-4"
+          className="w-full p-3 rounded-xl glass mb-4"
         />
   
         <div className="flex justify-end gap-3">
